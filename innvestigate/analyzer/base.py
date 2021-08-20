@@ -296,7 +296,7 @@ class AnalyzerNetworkBase(AnalyzerBase):
 
         # Flatten to form (batch_size, other_dimensions):
         if K.ndim(model_output[0]) > 2:
-            model_output = keras_layers.Flatten()(model_output)
+            model_output = keras_layers.Flatten()(model_output[0])
 
         if neuron_selection_mode == "max_activation":
             l = ilayers.Max(name="iNNvestigate_max")

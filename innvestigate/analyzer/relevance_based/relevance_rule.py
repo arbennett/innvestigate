@@ -304,20 +304,22 @@ class AlphaBetaRule(kgraph.ReverseMappingBase):
         activator_relevances = f(self._layer_wo_act_positive,
                                  self._layer_wo_act_negative,
                                  Xs_pos, Xs_neg)
+        self.activator_relevances = activator_relevances
 
         if self._beta: #only compute beta-weighted contributions of beta is not zero
             # xpos*wneg + xneg*wpos
             inhibitor_relevances = f(self._layer_wo_act_negative,
                                      self._layer_wo_act_positive,
                                      Xs_pos, Xs_neg)
-            return [keras_layers.Subtract()([times_alpha(a), times_beta(b)])
+            self.inhibitor_relevances = inhibitor_relevances
+            return [keras_layers.Add()([times_alpha(a), times_beta(b)])
                         for a, b in zip(activator_relevances, inhibitor_relevances)]
         else:
             return activator_relevances
 
 
 
-        
+
 class AlphaBetaIgnoreBiasRule(AlphaBetaRule):
     """Same as AlphaBetaRule but ignores biases."""
     def __init__(self, *args, **kwargs):

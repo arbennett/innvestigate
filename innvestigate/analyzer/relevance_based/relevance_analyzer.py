@@ -499,7 +499,7 @@ class _LRPFixedParams(LRP):
 
 class LRPZ(_LRPFixedParams):
     """LRP-analyzer that uses the LRP-Z rule"""
-    
+
     def __init__(self, model, *args, **kwargs):
         super(LRPZ, self).__init__(model, *args,
                                    rule="Z", bn_layer_rule="Z", **kwargs)
